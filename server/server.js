@@ -6,7 +6,7 @@ import express from "express"
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express()
 app.use(express.json())
-app.use("/static", express.static(`${__dirname}/client`))
+app.use(express.static(path.join(__dirname, "../client")));
 
 
 
@@ -14,6 +14,14 @@ app.use("/static", express.static(`${__dirname}/client`))
 app.get(`/movies`, async (req, res)=>{
     const movies = JSON.parse(await fs.readFile(path.join(__dirname, `../data/data.json`)))
     return res.json(movies)
+})
+app.get("/movies/:id", async (req, res) => {
+    const movies = JSON.parse(await fs.readFile(path.join(__dirname, `../data/data.json`)));
+
+    const movie = movies.find(movie => movie.title === decodeURIComponent(req.params.id));
+
+    return res.json(movie)
+    
 })
 
 //Create
