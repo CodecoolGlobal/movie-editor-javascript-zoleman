@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, "../client")));
 
 
 //GET
-app.get(`/movies`, async (req, res)=>{
+app.get(`/api/movies`, async (req, res)=>{
     const movies = JSON.parse(await fs.readFile(path.join(__dirname, `../data/data.json`)))
     return res.json(movies)
 })
